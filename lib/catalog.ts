@@ -30,6 +30,7 @@ const size=(label:string,measurements:Record<string,number>):DemoSize=>({
 export const DEMO_PRODUCTS:DemoProduct[]=[
   {
     code:'FIT-910101',
+    imageUrl:'/demo-products/FIT-910101.svg',
     brand:'morrow',
     name:'Essential Oxford Shirt',
     majorCategory:'TOP',
@@ -47,6 +48,7 @@ export const DEMO_PRODUCTS:DemoProduct[]=[
   },
   {
     code:'FIT-910102',
+    imageUrl:'/demo-products/FIT-910102.svg',
     brand:'morrow',
     name:'Daily Wool Slacks',
     majorCategory:'BOTTOM',
@@ -64,6 +66,7 @@ export const DEMO_PRODUCTS:DemoProduct[]=[
   },
   {
     code:'FIT-910103',
+    imageUrl:'/demo-products/FIT-910103.svg',
     brand:'morrow',
     name:'Balmacaan Wool Coat',
     majorCategory:'OUTER',
@@ -81,6 +84,7 @@ export const DEMO_PRODUCTS:DemoProduct[]=[
   },
   {
     code:'FIT-920101',
+    imageUrl:'/demo-products/FIT-920101.svg',
     brand:'archive92',
     name:'Heavyweight Logo Hoodie',
     majorCategory:'TOP',
@@ -98,6 +102,7 @@ export const DEMO_PRODUCTS:DemoProduct[]=[
   },
   {
     code:'FIT-920102',
+    imageUrl:'/demo-products/FIT-920102.svg',
     brand:'archive92',
     name:'Utility Wide Cargo',
     majorCategory:'BOTTOM',
@@ -115,6 +120,7 @@ export const DEMO_PRODUCTS:DemoProduct[]=[
   },
   {
     code:'FIT-920103',
+    imageUrl:'/demo-products/FIT-920103.svg',
     brand:'archive92',
     name:'Volume Puffer Jacket',
     majorCategory:'OUTER',
@@ -132,6 +138,7 @@ export const DEMO_PRODUCTS:DemoProduct[]=[
   },
   {
     code:'FIT-930101',
+    imageUrl:'/demo-products/FIT-930101.svg',
     brand:'plainlab',
     name:'Everyday Cotton Tee',
     majorCategory:'TOP',
@@ -149,6 +156,7 @@ export const DEMO_PRODUCTS:DemoProduct[]=[
   },
   {
     code:'FIT-930102',
+    imageUrl:'/demo-products/FIT-930102.svg',
     brand:'plainlab',
     name:'Straight Blue Denim',
     majorCategory:'BOTTOM',
@@ -166,6 +174,7 @@ export const DEMO_PRODUCTS:DemoProduct[]=[
   },
   {
     code:'FIT-930103',
+    imageUrl:'/demo-products/FIT-930103.svg',
     brand:'plainlab',
     name:'Minimal Long Dress',
     majorCategory:'DRESS',
