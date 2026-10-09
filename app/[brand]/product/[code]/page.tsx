@@ -125,7 +125,7 @@ export default async function ProductPage({
             <span>↳</span>
             <p>
               상품 코드를 직접 입력할 필요가 없습니다.
-              이 버튼이 <strong>{product.code}</strong>를 FIT ID에 자동 전달합니다.
+              이 쇼핑몰 안에서 FIT ID가 열리고 <strong>{product.code}</strong>를 자동으로 전달합니다.
             </p>
           </div>
         </div>
