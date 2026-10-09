@@ -26,11 +26,11 @@ export default function ProductCard({
           {String(index+1).padStart(2,'0')}
         </span>
 
-        <div className="garmentGlyph" aria-hidden="true">
+        {product.imageUrl ? <img src={product.imageUrl} alt={product.name} className="demoProductPhoto" loading="lazy"/> : <div className="garmentGlyph" aria-hidden="true">
           <span/>
           <span/>
           <span/>
-        </div>
+        </div>}
 
         <span className="visualCategory">
           {product.subCategory.replaceAll('_',' ')}
