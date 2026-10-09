@@ -1,0 +1,78 @@
+{
+  "source": "AI-generated photorealistic demo apparel; not photographs of actual inventory",
+  "bucket": "product-images",
+  "products": [
+    {
+      "code": "FIT-910101",
+      "path": "demo-products/2026-10/FIT-910101.jpg",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 361129,
+      "sha256": "6cbfc289a5bfd39b36f38f04d855b4bbf614e42d6be4f128300e4b9925b326d6"
+    },
+    {
+      "code": "FIT-910102",
+      "path": "demo-products/2026-10/FIT-910102.jpg",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 376568,
+      "sha256": "98ec605709335c55a1b882643fc80d53e262bf02ca9aa7728b715d31c483d13b"
+    },
+    {
+      "code": "FIT-910103",
+      "path": "demo-products/2026-10/FIT-910103.jpg",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 417815,
+      "sha256": "8303ec4420d28d6c380d610db32e7f7465d57ca01388dfacc6a581815f0b8ab2"
+    },
+    {
+      "code": "FIT-920101",
+      "path": "demo-products/2026-10/FIT-920101.jpg",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 417381,
+      "sha256": "fb8cbfa01685222f930ec3ea2f5296708e7edb530ed80c422cc17caf2f26d954"
+    },
+    {
+      "code": "FIT-920102",
+      "path": "demo-products/2026-10/FIT-920102.jpg",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 288675,
+      "sha256": "5e24ea3febbcafb1cac767d27ebc286f0b427310b8c02a5cad32205da13d37d4"
+    },
+    {
+      "code": "FIT-920103",
+      "path": "demo-products/2026-10/FIT-920103.jpg",
+      "width": 1145,
+      "height": 1374,
+      "bytes": 248632,
+      "sha256": "26922cf8aabb13ead785453dbebad06f86ec133481ea0bf2889f48a89b720651"
+    },
+    {
+      "code": "FIT-930101",
+      "path": "demo-products/2026-10/FIT-930101.jpg",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 210155,
+      "sha256": "9d4551108119eeb3313b947217d5fca35b45062c3b5782791df050529aec1ed4"
+    },
+    {
+      "code": "FIT-930102",
+      "path": "demo-products/2026-10/FIT-930102.jpg",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 445591,
+      "sha256": "e59ecade349f544f92c11210809d2a65f6743002d01343bf9a01ccaebf4d1a5b"
+    },
+    {
+      "code": "FIT-930103",
+      "path": "demo-products/2026-10/FIT-930103.jpg",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 195553,
+      "sha256": "d2537481aef99c65ba36e3b4b8dadb01dc1d7d6fb94ceab30fe92c841c347d3c"
+    }
+  ]
+}

@@ -1120,5 +1120,6 @@ html,body{max-width:100%;overflow-x:hidden}
 
 /* FIT ID demo product photography */
 .productVisual,.detailVisual{position:relative;overflow:hidden}
-.demoProductPhoto,.demoDetailPhoto{display:block;width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:center;z-index:0}
+.demoProductPhoto,.demoDetailPhoto{display:block;width:100%;height:100%;position:absolute;inset:0;object-fit:contain;object-position:center;background:#f8f7f5;z-index:0}
 .productVisual .visualIndex,.productVisual .visualCategory,.detailVisual .detailBadge,.detailVisual>p{position:relative;z-index:1}
+
