@@ -58,8 +58,8 @@ export default async function StorePage({
             <h2>{brand.collection}</h2>
           </div>
           <p>
-            각 상품의 실측 데이터가 FIT ID 표준으로 연결되어 있습니다.
-            같은 FIT ID를 다른 쇼핑몰에서도 다시 사용할 수 있습니다.
+            상품마다 다른 실측은 FIT ID 기준으로 연결됩니다.
+            한 번 만든 내 핏 기준을 다른 쇼핑몰에서도 그대로 이어서 사용할 수 있습니다.
           </p>
         </div>
 
@@ -78,7 +78,7 @@ export default async function StorePage({
       <section className="fitNetworkStory" id="story">
         <div>
           <span className="storyEyebrow">POWERED BY FIT ID</span>
-          <h2>사이즈표는 쇼핑몰마다 달라도,<br/>내 핏 기준은 하나.</h2>
+          <h2>쇼핑몰이 달라도,<br/>내 핏 기준은 하나.</h2>
         </div>
 
         <div className="storySteps">

@@ -10,15 +10,15 @@ export default function DemoIndex(){
       </div>
 
       <section className="indexHero">
-        <p>CONNECTED COMMERCE PROTOTYPE</p>
+        <p>CONNECTED COMMERCE</p>
         <h1>
-          한 번 만든 FIT ID를<br/>
-          다른 쇼핑몰에서도 그대로.
+          내 핏 기준은 한 번만.<br/>
+          쇼핑몰이 달라도 그대로.
         </h1>
         <div className="indexHeroMeta">
           <p>
-            서로 다른 세 개의 가상 쇼핑몰이 같은 FIT ID 네트워크에 연결되어 있습니다.
-            상품을 고른 뒤 FIT ID 버튼을 눌러 실제 Consumer FIT CHECK로 이동합니다.
+            각 쇼핑몰의 상품 실측은 달라도, FIT ID에 저장된 개인 핏 기준은 그대로 이어집니다.
+            상품에서 FIT ID를 열어 바로 비교해보세요.
           </p>
           <span>SELECT A STORE ↓</span>
         </div>
