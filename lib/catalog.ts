@@ -8,6 +8,7 @@ export type DemoSize={
 
 export type DemoProduct={
   code:string;
+  imageUrl?:string;
   brand:BrandSlug;
   name:string;
   majorCategory:'TOP'|'BOTTOM'|'OUTER'|'DRESS';
