@@ -76,11 +76,11 @@ export default async function ProductPage({
           data-category={product.majorCategory}
         >
           <span className="detailBadge">{product.badge}</span>
-          <div className="detailGarment" aria-hidden="true">
+          {product.imageUrl ? <img src={product.imageUrl} alt={product.name} className="demoDetailPhoto"/> : <div className="detailGarment" aria-hidden="true">
             <span/>
             <span/>
             <span/>
-          </div>
+          </div>}
           <p>{product.subCategory.replaceAll('_',' ')}</p>
         </div>
 
