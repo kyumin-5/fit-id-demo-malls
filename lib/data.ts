@@ -35,6 +35,7 @@ function mapLiveProduct(row:any,brand:BrandSlug):DemoProduct{
 
   return {
     code:String(row.code),
+    imageUrl: row.image_path ? (String(row.image_path).startsWith('http') ? String(row.image_path) : supabase?.storage.from('product-images').getPublicUrl(String(row.image_path)).data.publicUrl) : fallback?.imageUrl,
     brand,
     name:String(row.name||fallback?.name||'Product'),
     majorCategory:(row.major_category||fallback?.majorCategory||'TOP') as DemoProduct['majorCategory'],
@@ -56,7 +57,7 @@ export async function getProductsForBrand(brand:BrandSlug):Promise<DemoProduct[]
   const {data,error}=await supabase
     .from('products')
     .select(
-      'code,name,material,stretch,major_category,sub_category,product_sizes(size_label,measurements,measurement_schema_version)'
+      'code,name,image_path,material,stretch,major_category,sub_category,product_sizes(size_label,measurements,measurement_schema_version)'
     )
     .eq('shop_id',BRANDS[brand].shopId)
     .order('created_at',{ascending:true});
@@ -80,7 +81,7 @@ export async function getProductByCode(
   const {data,error}=await supabase
     .from('products')
     .select(
-      'code,name,material,stretch,major_category,sub_category,product_sizes(size_label,measurements,measurement_schema_version)'
+      'code,name,image_path,material,stretch,major_category,sub_category,product_sizes(size_label,measurements,measurement_schema_version)'
     )
     .eq('code',code)
     .maybeSingle();
