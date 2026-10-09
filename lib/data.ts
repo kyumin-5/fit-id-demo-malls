@@ -35,7 +35,7 @@ function mapLiveProduct(row:any,brand:BrandSlug):DemoProduct{
 
   return {
     code:String(row.code),
-    imageUrl: row.image_path ? (String(row.image_path).startsWith('http') ? String(row.image_path) : supabase?.storage.from('product-images').getPublicUrl(String(row.image_path)).data.publicUrl) : fallback?.imageUrl,
+    imageUrl: fallback?.imageUrl || (row.image_path ? (String(row.image_path).startsWith('http') ? String(row.image_path) : supabase?.storage.from('product-images').getPublicUrl(String(row.image_path)).data.publicUrl) : undefined),
     brand,
     name:String(row.name||fallback?.name||'Product'),
     majorCategory:(row.major_category||fallback?.majorCategory||'TOP') as DemoProduct['majorCategory'],
