@@ -5,7 +5,7 @@ import vm from 'node:vm';
 
 const sdk = fs.readFileSync(new URL('../public/sdk/v1/fit-id.js', import.meta.url), 'utf8');
 const fixture = fs.readFileSync(new URL('../public/sdk-demo.html', import.meta.url), 'utf8');
-assert.match(fixture, /data-fit-id-product-code="FIT-910101"/);
+assert.match(fixture, /data-fit-id-merchant-product-id="FITID-DEMO-MORROW-001"/);
 assert.match(fixture, /src="\/sdk\/v1\/fit-id\.js"/);
 
 class Node {
