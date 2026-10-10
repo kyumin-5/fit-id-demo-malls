@@ -52,7 +52,7 @@ const document = {
   createElement: (tag) => new Node(tag),
   documentElement: new Node('html'),
   getElementById: (id) => head.children.find(node => node.id === id) || null,
-  querySelectorAll: (selector) => selector === '[data-fit-id-product-code]' ? [target] : [],
+  querySelectorAll: (selector) => selector === '[data-fit-id-product-code],[data-fit-id-merchant-product-id]' ? [target] : [],
   addEventListener: () => {},
   removeEventListener: () => {},
   dispatchEvent: event => {mounted.push(event.type);return true;}
