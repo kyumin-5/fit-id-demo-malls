@@ -5,6 +5,13 @@ import vm from 'node:vm';
 
 const sdk = fs.readFileSync(new URL('../public/sdk/v1/fit-id.js', import.meta.url), 'utf8');
 const fixture = fs.readFileSync(new URL('../public/sdk-demo.html', import.meta.url), 'utf8');
+const storeButton = fs.readFileSync(new URL('../components/FitIdButton.tsx', import.meta.url), 'utf8');
+// Demo storefront must pass the currently viewed product to the Consumer iframe.
+assert.match(storeButton,/searchParams\.set\('productCode',code\)/);
+assert.match(storeButton,/searchParams\.set\('source','demo-commerce'\)/);
+assert.match(storeButton,/searchParams\.set\('demoStore',brand\)/);
+assert.match(storeButton,/searchParams\.set\('embed','1'\)/);
+assert.match(storeButton,/onClick=\{close\}/);
 assert.match(fixture, /data-fit-id-merchant-product-id="FITID-DEMO-MORROW-001"/);
 assert.match(fixture, /src="\/sdk\/v1\/fit-id\.js"/);
 
@@ -58,12 +65,13 @@ const document = {
   dispatchEvent: event => {mounted.push(event.type);return true;}
 };
 const opened = [];
+let mockResolveStatus=200;
 const listeners={};
 const consumerFrame={};
 const window = {
   open: (url) => {opened.push(url);return {};},
   addEventListener:(name,handler)=>{listeners[name]=handler;},
-  fetch:async(url)=>({ok:true,json:async()=>({productCode:'FIT-123456'})})
+  fetch:async(url)=>({ok:mockResolveStatus===200,status:mockResolveStatus,json:async()=>({productCode:'FIT-123456'})})
 };
 class CustomEvent {
   constructor(type, options) {this.type = type;this.detail = options?.detail;}
@@ -107,6 +115,14 @@ assert.equal(new URL(body.children[0].children[0].children[1].src).searchParams.
 window.FitIDSDK.close();
 assert.equal(await window.FitIDSDK.resolveMerchantProduct(merchantShop,'SKU-ABC-15'),'FIT-123456','cached resolution');
 await assert.rejects(window.FitIDSDK.resolveMerchantProduct('bad-shop','SKU-ABC-15'),/INVALID_MERCHANT_MAPPING/);
+// Unready merchant products must fail closed instead of opening another product.
+mockResolveStatus=404;
+await assert.rejects(
+  window.FitIDSDK.resolveMerchantProduct(merchantShop,'SKU-NOT-READY'),
+  /PRODUCT_NOT_READY/
+);
+assert.equal(body.children.length,0,'not-ready merchant item never opens FIT CHECK');
+mockResolveStatus=200;
 // Ignore forged close requests, but accept trusted Consumer iframe requests.
 window.FitIDSDK.open('FIT-910101');
 assert.equal(body.children.length,1);
