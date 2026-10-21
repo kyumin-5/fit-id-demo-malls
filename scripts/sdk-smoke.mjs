@@ -21,7 +21,7 @@ class Node {
     this.nodeType = 1;
     this.children = [];
     this.attributes = {};
-    this.style = {overflow: ''};
+    this.style = {overflow: '',setProperty(name,value){this[name]=value;}};
     this.handlers = {};
     this.parentNode = null;
   }
@@ -48,6 +48,10 @@ class Node {
 }
 const target = new Node('div');
 target.setAttribute('data-fit-id-product-code', 'FIT-910101');
+target.setAttribute('data-fit-id-button-color', '#123456');
+target.setAttribute('data-fit-id-text-color', '#ffffff');
+target.setAttribute('data-fit-id-accent-color', '#aabbcc');
+target.setAttribute('data-fit-id-radius', '8');
 const head = new Node('head');
 const body = new Node('body');
 const mounted = [];
@@ -77,9 +81,13 @@ class CustomEvent {
   constructor(type, options) {this.type = type;this.detail = options?.detail;}
 }
 vm.runInNewContext(sdk, {window, document, URL, CustomEvent, MutationObserver: undefined, setTimeout, clearTimeout, AbortController});
-assert.equal(window.FitIDSDK.version, '1.1.0');
+assert.equal(window.FitIDSDK.version, '1.2.0');
 assert.equal(target.children.length, 2, 'mounts button and status from product code');
-assert.equal(target.getAttribute('data-fit-id-mounted'), '1.1.0');
+assert.equal(target.getAttribute('data-fit-id-mounted'), '1.2.0');
+assert.equal(target.children[0].style['--fitid-bg'], '#123456');
+assert.equal(target.children[0].style['--fitid-text'], '#ffffff');
+assert.equal(target.children[0].style['--fitid-accent'], '#aabbcc');
+assert.equal(target.children[0].style['--fitid-radius'], '8px');
 assert.equal(window.FitIDSDK.mountAll(document), 1);
 assert.equal(target.children.length, 2, 'duplicate mount does not create extra button');
 assert.equal(window.FitIDSDK.open('!bad-code!'), false, 'rejects malformed product codes');
@@ -94,9 +102,11 @@ assert.equal(iframeUrl.origin, 'https://fit-id-consumer-mtvz.vercel.app');
 assert.equal(iframeUrl.searchParams.get('productCode'), 'FIT-910101');
 assert.equal(iframeUrl.searchParams.get('source'), 'partner-sdk');
 assert.equal(body.style.overflow, 'hidden');
-window.FitIDSDK.close();
+dialog.children[2].children[1].handlers.click();
 assert.equal(body.children.length, 0);
 assert.equal(body.style.overflow, '');
+assert.ok(mounted.includes('fitid:continue-shopping'));
+
 assert.equal(window.FitIDSDK.open('FIT-930102', {mode: 'new-tab'}), true);
 assert.equal(new URL(opened[0]).searchParams.get('productCode'), 'FIT-930102');
 assert.ok(mounted.includes('fitid:mounted'));
@@ -132,4 +142,4 @@ const trustedFrame=body.children[0].children[0].children[1];
 trustedFrame.contentWindow=consumerFrame;
 listeners.message({origin:'https://fit-id-consumer-mtvz.vercel.app',source:consumerFrame,data:{type:'FITID_CLOSE_REQUEST_V1'}});
 assert.equal(body.children.length,0,'Consumer can request modal close from its own iframe');
-console.log('FIT ID SDK v1.1 smoke PASS: direct code, merchant ID resolve/cache, origin-checked close, iframe, new tab.');
+console.log('FIT ID SDK v1.2 smoke PASS: custom theme, continue-shopping, merchant resolution, origin-check, iframe, new tab.');
