@@ -7,7 +7,7 @@
   'use strict';
   if (window.FitIDSDK) return;
 
-  var VERSION = '1.1.0';
+  var VERSION = '1.2.0';
   var CONSUMER_URL = 'https://fit-id-consumer-mtvz.vercel.app/';
   var STYLE_ID = 'fitid-sdk-v1-styles';
   var SELECTOR = '[data-fit-id-product-code],[data-fit-id-merchant-product-id]';
@@ -90,10 +90,10 @@
   function ensureStyles() {
     if (document.getElementById(STYLE_ID)) return;
     var css = [
-      '.fitid-sdk-button{box-sizing:border-box!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:12px!important;min-height:50px!important;padding:12px 18px!important;border:0!important;border-radius:12px!important;background:#092e24!important;color:#fff!important;font:600 14px/1.4 system-ui,sans-serif!important;cursor:pointer!important;max-width:100%!important;}',
-      '.fitid-sdk-button:hover{background:#155f45!important;}',
+      '.fitid-sdk-button{box-sizing:border-box!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:12px!important;min-height:50px!important;padding:12px 18px!important;border:0!important;border-radius:var(--fitid-radius,12px)!important;background:var(--fitid-bg,#092e24)!important;color:var(--fitid-text,#fff)!important;font:600 14px/1.4 system-ui,sans-serif!important;cursor:pointer!important;max-width:100%!important;}',
+      '.fitid-sdk-button:hover{filter:brightness(1.12)!important;}',
       '.fitid-sdk-button:focus-visible,.fitid-sdk-close:focus-visible,.fitid-sdk-outside:focus-visible{outline:3px solid #50eda5!important;outline-offset:3px!important;}',
-      '.fitid-sdk-mark{color:#81eeb6;font-weight:800;letter-spacing:.08em;}',
+      '.fitid-sdk-mark{color:var(--fitid-accent,#81eeb6)!important;font-weight:800;letter-spacing:.08em;}',
       '.fitid-sdk-status{display:block!important;font:500 12px/1.6 system-ui,sans-serif!important;color:#9a4820!important;margin-top:7px!important;}',
       '.fitid-sdk-cover{position:fixed!important;inset:0!important;z-index:2147483000!important;background:rgba(0,0,0,.72)!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:24px!important;box-sizing:border-box!important;}',
       '.fitid-sdk-dialog{box-sizing:border-box!important;display:flex!important;flex-direction:column!important;width:min(100%,1000px)!important;height:min(92vh,920px)!important;max-height:calc(100dvh - 16px)!important;overflow:hidden!important;border-radius:18px!important;border:1px solid #264d3f!important;background:#fff!important;box-shadow:0 20px 70px #0008!important;color:#111!important;font:14px/1.5 system-ui,sans-serif!important;}',
@@ -104,7 +104,8 @@
       '.fitid-sdk-outside{color:#b3ffdc!important;text-decoration:underline!important;font-size:12px!important;}',
       '.fitid-sdk-close{border:0!important;background:transparent!important;color:#fff!important;font-size:30px!important;line-height:1!important;cursor:pointer!important;padding:4px 10px!important;}',
       '.fitid-sdk-frame{border:0!important;width:100%!important;height:100%!important;min-height:0!important;flex:1!important;background:#f5f7f8!important;}',
-      '.fitid-sdk-footer{padding:10px 18px;background:#f6f8f7;color:#59665f;font-size:12px;}',
+      '.fitid-sdk-footer{padding:10px 18px;background:#f6f8f7;color:#59665f;font-size:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}',
+      '.fitid-sdk-continue{background:transparent;border:1px solid #b6cdc0;border-radius:8px;color:#155c43;font:700 12px system-ui,sans-serif;padding:8px 12px;cursor:pointer;}',
       '@media(max-width:640px){.fitid-sdk-cover{padding:0!important;}.fitid-sdk-dialog{width:100%!important;height:100dvh!important;max-height:100dvh!important;border-radius:0!important;}.fitid-sdk-header{padding:12px;}.fitid-sdk-code{font-size:10px;}.fitid-sdk-footer{padding:8px 12px;}}'
     ].join('');
     var style = element('style');
@@ -206,7 +207,15 @@
       emit('frame-load', {productCode: code});
     });
 
-    var footer = element('div', 'fitid-sdk-footer', '로그인 또는 화면 표시가 제한되면 우측 상단의 "새 창으로 보기"를 이용하세요.');
+    var footer = element('div', 'fitid-sdk-footer');
+    footer.appendChild(element('span', '', '로그인 또는 화면 표시가 제한되면 우측 상단의 "새 창으로 보기"를 이용하세요.'));
+    var continueButton = element('button', 'fitid-sdk-continue', '쇼핑 계속하기 →');
+    continueButton.type = 'button';
+    continueButton.addEventListener('click', function () {
+      emit('continue-shopping', {productCode: code, shopId: shopId});
+      close();
+    });
+    footer.appendChild(continueButton);
     dialog.appendChild(header);
     dialog.appendChild(frame);
     dialog.appendChild(footer);
@@ -239,9 +248,23 @@
     }
     var mode = text(config.mode || host.getAttribute('data-fit-id-mode')).toLowerCase() === 'new-tab' ? 'new-tab' : 'modal';
     var label = text(config.label || host.getAttribute('data-fit-id-label')) || '내 FIT ID로 사이즈 확인';
+    // Only strict hex colours and approved radii are accepted; no raw merchant CSS is injected.
+    function safeHex(value) {
+      var candidate = text(value);
+      return /^#[0-9a-fA-F]{6}$/.test(candidate) ? candidate : '';
+    }
+    var bg = safeHex(config.buttonColor || host.getAttribute('data-fit-id-button-color'));
+    var fg = safeHex(config.textColor || host.getAttribute('data-fit-id-text-color'));
+    var accent = safeHex(config.accentColor || host.getAttribute('data-fit-id-accent-color'));
+    var radius = text(config.radius || host.getAttribute('data-fit-id-radius'));
+    if (!/^(?:0|4|8|12|16|24)$/.test(radius)) radius = '';
     ensureStyles();
     var button = element('button', 'fitid-sdk-button');
     button.type = 'button';
+    if (bg) button.style.setProperty('--fitid-bg', bg);
+    if (fg) button.style.setProperty('--fitid-text', fg);
+    if (accent) button.style.setProperty('--fitid-accent', accent);
+    if (radius) button.style.setProperty('--fitid-radius', radius + 'px');
     button.setAttribute('aria-label', 'FIT ID 사이즈 확인');
     button.appendChild(element('span', 'fitid-sdk-mark', 'FIT ID'));
     var caption = element('span', '', label);
